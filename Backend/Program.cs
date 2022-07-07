@@ -16,7 +16,12 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-
+// //////25. Adding CORS Support to the API
+// builder.Services.AddCors(opt => {
+//     opt.AddPolicy("CorsPolicy", policy => {
+//         policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200");
+//     });
+// });
 
 
 var app = builder.Build();
@@ -28,7 +33,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+
 app.UseHttpsRedirection();
+
+////25. Adding CORS Support to the API
+app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200"));
 
 app.UseAuthorization();
 
