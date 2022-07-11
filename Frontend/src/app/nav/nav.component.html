@@ -1,0 +1,56 @@
+<nav class="navbar navbar-expand-md navbar-light bg-light border-bottom shadow-sm">
+  <div class="container-fluid">
+    <a class="navbar-brand text-uppercase mx-3" href="/">
+      <img src="/assets/images/BigAlsCanada.png" width="30" height="30">
+      <span style="margin-left: 1rem; margin-right: 2rem; font-size: medium; font-weight: bold; color: lightskyblue;">BigAl's</span>
+    </a>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item active" *ngIf="user$ | async">
+          <a class="nav-link mx-2" style="font-size: medium;" [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Matches</a>
+        </li>
+        <li class="nav-item" *ngIf="user$ | async">
+          <a class="nav-link mx-2" style="font-size: medium;" routerLink="/shop" routerLinkActive="active">Lists</a>
+        </li>
+        <li class="nav-item" *ngIf="user$ | async">
+          <a class="nav-link mx-2" style="font-size: medium;" routerLink="/test-error" routerLinkActive="active">Message</a>
+        </li>
+      </ul>
+
+      <form *ngIf="!(user$ | async)" #loginForm="ngForm" class="d-flex" (ngSubmit)="login()" autocomplete="off">
+        <input
+          name="username"
+          [(ngModel)]="model.username"
+          class="form-control me-2"
+          type="text"
+          placeholder="Username"
+        />
+        <input
+          name="password"
+          [(ngModel)]="model.password"
+          class="form-control me-2"
+          type="password"
+          placeholder="Password"
+        />
+        <button class="btn btn-sm btn-primary mx-2" style="margin-top: 2px; margin-bottom: 2px;" type="submit">
+          LOGIN
+        </button>
+      </form>
+
+      <div class="btn-group" dropdown *ngIf="user$ | async">
+        <button dropdownToggle type="button" class="btn btn-primary dropdown-toggle" aria-controls="dropdown-animated">
+          Welcome
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" *dropdownMenu role="menu" aria-labelledby="button-animated">
+          <li role="menuitem"><a class="dropdown-item mt-2">Edit Profile</a></li>
+          <li role="menuitem"><a class="dropdown-item mt-1">Search</a></li>
+          <li class="divider dropdown-divider"></li>
+          <li role="menuitem"><a class="dropdown-item" (click)="logout()" style="color: red;">Logout</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</nav>
+

@@ -1,0 +1,37 @@
+<div class="d-flex justify-content-center mt-5">
+
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+          <div class="text-center mb-4">
+              <h1 class="h3 mb-3 font-weight-normal"></h1>
+          </div>
+
+          <div class="text-center mb-4">
+            <mat-form-field style="width: 33vw;">
+              <input matInput formControlName="email" placeholder="Email"/>
+              <mat-error *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">Please enter a valid email.</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="text-center mb-4">
+            <mat-form-field style="width: 33vw;">
+              <input matInput formControlName="password" placeholder="Password"/>
+              <mat-error *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">Please enter a valid password.</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="text-center mb-4">
+            <button [disabled]="loginForm.invalid" class="btn btn-primary btn-block" type="submit">Sign in</button>
+          </div>
+      </form>
+
+</div>
+<br><br>
+<div class="text-center mb-4">
+  <p>Form Status: {{loginForm.status}}</p>
+  <p>Email Status: {{loginForm.get('email')?.status}}</p>
+  <p>Email Touched: {{loginForm.get('email')?.touched}}</p>
+  <p>Email Dirty: {{loginForm.get('email')?.dirty}}</p>
+  <pre>{{loginForm.value | json}}</pre>
+</div>
+
+

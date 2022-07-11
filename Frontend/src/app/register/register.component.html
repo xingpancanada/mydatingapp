@@ -1,0 +1,51 @@
+
+<div class="container justify-content-center" style="width: 22rem;">
+  <form [formGroup]='registerForm' (ngSubmit)="register()" autocomplete="off">
+    <h2 class="text-center text-primary">SIGN UP</h2>
+
+    <!-- <div class="form-group my-3 text-center">
+        <label class="control-label" style="margin-right: 1rem;">I am a: </label>
+        <label class="radio-inline" style="margin-right: 3rem;">
+            <input type="radio" value='male' formControlName='gender'> Male
+        </label>
+        <label class="radio-inline">
+            <input type="radio" value='female' formControlName='gender'> Female
+        </label>
+    </div> -->
+
+    <div class="mb-3">
+      <mat-form-field style="width: 20rem;">
+        <input matInput formControlName="userName" placeholder="Username"/>
+        <mat-error *ngIf="registerForm.get('userName')?.invalid && registerForm.get('userName')?.touched">Please enter a user name.</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="mb-3">
+      <mat-form-field style="width: 20rem;">
+        <input matInput formControlName="password" placeholder="Password"/>
+        <mat-error *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">Please enter a valid password: password must have 1 Uppercase, 1 Lowercase, 1 number, 1 non alphanumeric and at least 8 characters</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="mb-3">
+      <mat-form-field style="width: 20rem;">
+        <input matInput formControlName="confirmPassword" placeholder="Confirm Password"/>
+        <mat-error *ngIf="registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched">Please enter a matched password</mat-error>
+      </mat-form-field>
+    </div>
+
+    <!-- <div class="form-group mb-4">
+      <select class="form-select" style="width: 20rem;">
+        <option selected [value]="">Who is your favorite user?</option>
+          <option *ngFor="let user of usersInput" [value]="user.userName">
+              {{user.userName}}
+          </option>
+      </select>
+    </div> -->
+
+    <div class="form-group text-center">
+      <button [disabled]='!registerForm.valid' class="btn btn-success mx-2" type="submit">Register</button>
+      <button class="btn btn-warning mx-2" (click)="cancel()" type="button">Cancel</button>
+    </div>
+  </form>
+</div>
