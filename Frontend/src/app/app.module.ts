@@ -1,7 +1,7 @@
 import { MatInputModule } from '@angular/material/input';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -21,7 +21,11 @@ import { ListsComponent } from './lists/lists.component';
 import { MessagesComponent } from './messages/messages.component';
 import { MemberDetailComponent } from './members/member-detail/member-detail.component';
 import { MemberListComponent } from './members/member-list/member-list.component';
-import { ErrorComponent } from './error/error.component';
+import { ErrorComponent } from './errors/error/error.component';
+import { TestErrorComponent } from './errors/test-error/test-error.component';
+import { ServerErrorComponent } from './errors/server-error/server-error.component';
+import { NotFoundComponent } from './errors/not-found/not-found.component';
+import { ErrorInterceptor } from './interceptors/error.interceptor';
 
 @NgModule({
   declarations: [
@@ -37,7 +41,10 @@ import { ErrorComponent } from './error/error.component';
     MessagesComponent,
     MemberDetailComponent,
     MemberListComponent,
-    ErrorComponent
+    ErrorComponent,
+    TestErrorComponent,
+    ServerErrorComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,
@@ -55,7 +62,9 @@ import { ErrorComponent } from './error/error.component';
       preventDuplicates: true,
     }),
   ],
-  providers: [HttpClient],
+  providers: [
+    {provide: HTTP_INTERCEPTORS,useClass: ErrorInterceptor,multi: true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

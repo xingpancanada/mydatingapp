@@ -2,6 +2,7 @@ import { ToastrService } from 'ngx-toastr';
 import { IUser } from './../models/user';
 import { AccountsService } from './../services/accounts.service';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-matches',
@@ -15,7 +16,8 @@ export class MatchesComponent implements OnInit {
 
   constructor(
     private accountsService: AccountsService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -34,6 +36,10 @@ export class MatchesComponent implements OnInit {
       next: user => {this.loggedIn = !!user},
       error: error => console.log(error)
     });
+    
+    if(!this.loggedIn){
+      this.router.navigateByUrl('/error');
+    }
   }
 
 }

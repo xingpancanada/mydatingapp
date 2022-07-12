@@ -8,6 +8,7 @@ namespace Backend.DTOs
         public string? UserName { get; set; }
         
         [Required]
+        [MinLength(4), MaxLength(16)]
         public string? Password { get; set; }
          
     }

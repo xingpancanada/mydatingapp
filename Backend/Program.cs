@@ -2,6 +2,7 @@ using System.Text;
 using Backend.Data;
 using Backend.Extensions;
 using Backend.Interfaces;
+using Backend.Middleware;
 using Backend.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +14,9 @@ var builder = WebApplication.CreateBuilder(args);
 var config = builder.Configuration;
 
 // Add services to the container.
+
+
+
 
 // //43.Adding token service
 // builder.Services.AddScoped<ITokenService, TokenService>();
@@ -50,6 +54,9 @@ builder.Services.AddSwaggerServicesFromExtension();
 builder.Services.AddIdentityServiceFromExtension(config);
 
 var app = builder.Build();
+
+//78.
+app.UseMiddleware<ExceptionMiddleware>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
