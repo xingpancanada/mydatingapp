@@ -1,20 +1,25 @@
 <nav class="navbar navbar-expand-md navbar-light bg-light border-bottom shadow-sm">
   <div class="container-fluid">
-    <a class="navbar-brand text-uppercase mx-3" href="/">
+    <a class="navbar-brand text-uppercase mx-3" routerLink="/">
       <img src="/assets/images/BigAlsCanada.png" width="30" height="30">
-      <span style="margin-left: 1rem; margin-right: 2rem; font-size: medium; font-weight: bold; color: lightskyblue;">BigAl's</span>
+      <span class="text-center" style="margin-left: 1rem; margin-right: 2rem; font-size: large; font-weight: bold; color: rgb(0, 157, 255);">BigAl's</span>
     </a>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item active" *ngIf="user$ | async">
-          <a class="nav-link mx-2" style="font-size: medium;" [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Matches</a>
-        </li>
-        <li class="nav-item" *ngIf="user$ | async">
-          <a class="nav-link mx-2" style="font-size: medium;" routerLink="/shop" routerLinkActive="active">Lists</a>
-        </li>
-        <li class="nav-item" *ngIf="user$ | async">
-          <a class="nav-link mx-2" style="font-size: medium;" routerLink="/test-error" routerLinkActive="active">Message</a>
-        </li>
+        <ng-container *ngIf="user$ | async">
+          <li class="nav-item">
+            <a class="nav-link mx-2" style="font-size: small;" routerLink="/members" routerLinkActive="active">Members</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link mx-2" style="font-size: small;" routerLink="/matches" routerLinkActive="active">Matches</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link mx-2" style="font-size: small;" routerLink="/lists" routerLinkActive="active">Lists</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link mx-2" style="font-size: small;" routerLink="/messages" routerLinkActive="active">Message</a>
+          </li>
+        </ng-container>
       </ul>
 
       <form *ngIf="!(user$ | async)" #loginForm="ngForm" class="d-flex" (ngSubmit)="login()" autocomplete="off">
@@ -37,9 +42,9 @@
         </button>
       </form>
 
-      <div class="btn-group" dropdown *ngIf="user$ | async">
-        <button dropdownToggle type="button" class="btn btn-primary dropdown-toggle" aria-controls="dropdown-animated">
-          Welcome
+      <div class="btn-group" dropdown *ngIf="(user$ | async) as user">
+        <button dropdownToggle type="button" class="btn btn-primary btn-sm dropdown-toggle" aria-controls="dropdown-animated">
+          Welcome {{user?.userName}}
           <span class="caret"></span>
         </button>
         <ul class="dropdown-menu" *dropdownMenu role="menu" aria-labelledby="button-animated">

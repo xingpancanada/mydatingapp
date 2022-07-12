@@ -1,9 +1,10 @@
-import { Observable } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
+import { Observable, tap } from 'rxjs';
 import { AccountsService } from './../services/accounts.service';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { ThisReceiver } from '@angular/compiler';
 import { IUser } from '../models/user';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-nav',
@@ -13,19 +14,21 @@ import { IUser } from '../models/user';
 export class NavComponent implements OnInit {
 
   users: any;
-  user: any;
+  //user: any;
   model: any = {};
   loggedIn: boolean = false;
   user$?: Observable<IUser | null>;
 
   constructor(
     private http: HttpClient,
-    private accountsService: AccountsService
+    private accountsService: AccountsService,
+    private router: Router,
+    private toastr: ToastrService
   ){}
 
   ngOnInit(): void {
     this.user$ = this.accountsService.user$;
-    //this.getCurrentUser();
+    this.getCurrentUser();
     //this.getUsers();
   }
 
@@ -40,22 +43,39 @@ export class NavComponent implements OnInit {
     this.accountsService.login(this.model).subscribe({
       next: resp => {
         console.log(resp);
-        this.user = resp;
-        this.loggedIn = true;
+        //this.user = resp;
+        if(resp){
+          this.loggedIn = true;
+          this.router.navigateByUrl('/members');
+        }
       },
-      error: err => console.log(err)
+      error: error => {
+        console.log(error);
+        this.toastr.error(error.error);
+      }
     })
   }
 
   logout(){
     this.accountsService.logout();
+    this.router.navigateByUrl('/');
     this.loggedIn = false;
   }
 
-  // getCurrentUser(){
-  //   this.accountsService.user$.subscribe({
-  //     next: user => this.loggedIn = !!user,
-  //     error: error => console.log(error)
-  //   });
+  getCurrentUser(){
+    this.accountsService.user$.subscribe({
+      next: user => {
+        this.loggedIn = !!user;
+        //this.user = user;
+      },
+      error: error => console.log(error)
+    });
+  }
+
+  // authCheck(){
+  //   this.getCurrentUser();
+  //   if(!this.loggedIn){
+  //     this.toastr.error('NOT Authorized!')
+  //   }
   // }
 }

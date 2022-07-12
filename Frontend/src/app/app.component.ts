@@ -2,6 +2,7 @@ import { AccountsService } from './services/accounts.service';
 import { IUser } from './models/user';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +14,8 @@ export class AppComponent implements OnInit{
   users: any;
 
   constructor(
-    private accountsService: AccountsService
+    private accountsService: AccountsService,
+    private router: Router
   ){}
 
   ngOnInit(): void {
@@ -22,7 +24,12 @@ export class AppComponent implements OnInit{
 
   setCurrentUser(){
     const user: IUser = JSON.parse(localStorage.getItem('user')!);
-    this.accountsService.setCurrentUser(user);
+    if(user){
+      this.accountsService.setCurrentUser(user);
+      //this.router.navigateByUrl('/members');
+    }else{
+      //this.router.navigateByUrl('/');
+    }
   }
 
 }
