@@ -1,6 +1,7 @@
 using System.Text;
 using Backend.Data;
 using Backend.Extensions;
+using Backend.Helpers;
 using Backend.Interfaces;
 using Backend.Middleware;
 using Backend.Services;
@@ -53,7 +54,12 @@ builder.Services.AddSwaggerServicesFromExtension();
 //47. Adding extension methods
 builder.Services.AddIdentityServiceFromExtension(config);
 
+
+
 var app = builder.Build();
+
+////use static images after add http photo resolver
+app.UseStaticFiles();
 
 //78.
 app.UseMiddleware<ExceptionMiddleware>();
@@ -68,6 +74,25 @@ if (app.Environment.IsDevelopment())
 
 
 app.UseHttpsRedirection();
+
+
+////90-91: Seeding data
+using var scope = app.Services.CreateAsyncScope();
+var services = scope.ServiceProvider;
+ILogger logger = app.Logger;
+//var loggerFactory = services.GetRequiredService<ILoggerFactory>;
+try 
+{
+    //28. Applying the migrations and creating the Database at app startup
+    var dbContext = services.GetRequiredService<DataContext>();
+    await dbContext.Database.MigrateAsync();
+    //29. Adding Seed data
+    await Seed.SeedUsers(dbContext);
+}
+catch (Exception ex)
+{
+    logger.LogError(ex, "An error occurred during migration");
+}
 
 ////25. Adding CORS Support to the API
 app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200"));

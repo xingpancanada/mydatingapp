@@ -21,7 +21,7 @@ const routes: Routes = [
   {path:'not-found', component: NotFoundComponent},
   {path:'matches', component: MatchesComponent},
   {path:'members', component: MemberListComponent},
-  {path:'members/:id', component: MemberDetailComponent},
+  {path:'members/:username', component: MemberDetailComponent},
   {path:'lists', component: ListsComponent},
   {path:'messages', component: MessagesComponent},
   //{path:'account', loadChildren: () => import('./account/account.module').then(mod => mod.AccountModule)}, //lazy loading

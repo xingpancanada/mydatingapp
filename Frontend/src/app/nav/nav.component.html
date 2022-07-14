@@ -8,11 +8,11 @@
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <ng-container *ngIf="user$ | async">
           <li class="nav-item">
-            <a class="nav-link mx-2" style="font-size: small;" routerLink="/members" routerLinkActive="active">Members</a>
+            <a class="nav-link mx-2" style="font-size: small;" routerLink="/members" routerLinkActive="active">Matches</a>
           </li>
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a class="nav-link mx-2" style="font-size: small;" routerLink="/matches" routerLinkActive="active">Matches</a>
-          </li>
+          </li> -->
           <li class="nav-item">
             <a class="nav-link mx-2" style="font-size: small;" routerLink="/lists" routerLinkActive="active">Lists</a>
           </li>
@@ -45,9 +45,9 @@
         </button>
       </form>
 
-      <div class="btn-group" dropdown *ngIf="(user$ | async) as user">
+      <div class="btn-group" dropdown *ngIf="(user$ | async) as u">
         <button dropdownToggle type="button" class="btn btn-primary btn-sm dropdown-toggle" aria-controls="dropdown-animated">
-          Welcome {{user?.userName}}
+          Welcome {{u?.username | uppercase}}
           <span class="caret"></span>
         </button>
         <ul class="dropdown-menu" *dropdownMenu role="menu" aria-labelledby="button-animated">

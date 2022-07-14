@@ -6,9 +6,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { TabsModule } from 'ngx-bootstrap/tabs';
 import { TestDirective } from './test.directive';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ToastrModule } from 'ngx-toastr';
+import { NgxGalleryModule } from '@kolkov/ngx-gallery';
+
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
@@ -26,6 +29,8 @@ import { TestErrorComponent } from './errors/test-error/test-error.component';
 import { ServerErrorComponent } from './errors/server-error/server-error.component';
 import { NotFoundComponent } from './errors/not-found/not-found.component';
 import { ErrorInterceptor } from './interceptors/error.interceptor';
+import { MemberCardComponent } from './members/member-card/member-card.component';
+import { JwtInterceptor } from './interceptors/jwt.interceptor';
 
 @NgModule({
   declarations: [
@@ -44,7 +49,8 @@ import { ErrorInterceptor } from './interceptors/error.interceptor';
     ErrorComponent,
     TestErrorComponent,
     ServerErrorComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    MemberCardComponent
   ],
   imports: [
     BrowserModule,
@@ -61,9 +67,12 @@ import { ErrorInterceptor } from './interceptors/error.interceptor';
       positionClass: 'toast-bottom-right',
       preventDuplicates: true,
     }),
+    TabsModule.forRoot(),
+    NgxGalleryModule,
   ],
   providers: [
-    {provide: HTTP_INTERCEPTORS,useClass: ErrorInterceptor,multi: true}
+    {provide: HTTP_INTERCEPTORS,useClass: ErrorInterceptor,multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true}
   ],
   bootstrap: [AppComponent]
 })

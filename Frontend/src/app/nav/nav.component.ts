@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { IUser } from '../models/user';
 import { Router } from '@angular/router';
+import { devOnlyGuardedExpression } from '@angular/compiler';
 
 @Component({
   selector: 'app-nav',
@@ -43,7 +44,6 @@ export class NavComponent implements OnInit {
     this.accountsService.login(this.model).subscribe({
       next: resp => {
         console.log(resp);
-        //this.user = resp;
         if(resp){
           this.loggedIn = true;
           this.router.navigateByUrl('/members');
@@ -51,7 +51,7 @@ export class NavComponent implements OnInit {
       },
       error: error => {
         console.log(error);
-        this.toastr.error(error.error);
+        this.toastr.error(error.title);
       }
     })
   }

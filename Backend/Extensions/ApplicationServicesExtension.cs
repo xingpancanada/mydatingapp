@@ -1,5 +1,7 @@
 using Backend.Data;
+using Backend.Helpers;
 using Backend.Interfaces;
+using Backend.Repositories;
 using Backend.Services;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,10 +15,16 @@ namespace Backend.Extensions
             //43.Adding token service
             services.AddScoped<ITokenService, TokenService>();
 
+            //93
+            services.AddScoped<IUserRepository, UserRepository>();
+
             //13.Adding a DbContext class
             services.AddDbContext<DataContext>(options => {
                 options.UseSqlite(config.GetConnectionString("DefaultConnection"));
             });
+
+            ////96. Adding AutoMapper
+            services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
 
 
             return services;
