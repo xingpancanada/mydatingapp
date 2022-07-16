@@ -25,7 +25,7 @@ namespace Backend.Controllers
         [HttpGet("not-found")]
         public ActionResult<AppUser> GetNotFound()
         {
-            var user = _context.Users.Find(-1);
+            var user = _context.Users!.Find(-1);
             if(user == null){
                 return NotFound();
             }
@@ -38,7 +38,7 @@ namespace Backend.Controllers
         {
             
             var user = _context.Users?.Find(-1);
-            var result = user.ToString()!;
+            var result = user?.ToString()!;
             return result;
             
         }

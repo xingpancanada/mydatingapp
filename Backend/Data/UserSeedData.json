@@ -13,7 +13,7 @@
       "Country": "Germany",
       "Photos": [
         {
-          "Url": "/images/replace1.jpeg",
+          "Url": "/assets/images/replace1.jpeg",
           "IsMain": true
         }
       ]
@@ -32,7 +32,7 @@
       "Country": "Algeria",
       "Photos": [
         {
-          "Url": "/images/replace2.jpeg",
+          "Url": "/assets/images/replace2.jpeg",
           "IsMain": true
         }
       ]
@@ -51,7 +51,7 @@
       "Country": "Estonia",
       "Photos": [
         {
-          "Url": "/images/replace3.jpeg",
+          "Url": "/assets/images/replace3.jpeg",
           "IsMain": true
         }
       ]
@@ -70,7 +70,7 @@
       "Country": "Portugal",
       "Photos": [
         {
-          "Url": "/images/replace4.jpeg",
+          "Url": "/assets/images/replace4.jpeg",
           "IsMain": true
         }
       ]
@@ -89,7 +89,7 @@
       "Country": "Vatican City State (Holy See)",
       "Photos": [
         {
-          "Url": "/images/replace5.jpeg",
+          "Url": "/assets/images/replace5.jpeg",
           "IsMain": true
         }
       ]
@@ -109,7 +109,7 @@
         "Country": "Egypt",
         "Photos": [
         {
-          "Url": "/images/replace11.jpeg",
+          "Url": "/assets/images/replace11.jpeg",
             "IsMain": true
         }
         ]
@@ -128,7 +128,7 @@
         "Country": "Nauru",
         "Photos": [
         {
-          "Url": "/images/replace12.jpeg",
+          "Url": "/assets/images/replace12.jpeg",
             "IsMain": true
         }
         ]
@@ -147,7 +147,7 @@
         "Country": "Angola",
         "Photos": [
         {
-          "Url": "/images/replace13.jpeg",
+          "Url": "/assets/images/replace13.jpeg",
             "IsMain": true
         }
         ]
@@ -166,7 +166,7 @@
         "Country": "Niger",
         "Photos": [
         {
-          "Url": "/images/replace14.jpeg",
+          "Url": "/assets/images/replace14.jpeg",
             "IsMain": true
         }
         ]
@@ -185,7 +185,7 @@
         "Country": "Zaire",
         "Photos": [
         {
-          "Url": "/images/replace15.jpeg",
+          "Url": "/assets/images/replace15.jpeg",
             "IsMain": true
         }
         ]

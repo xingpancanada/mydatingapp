@@ -12,22 +12,27 @@ namespace Backend.Helpers
     {
         public AutoMapperProfiles()
         {
-            CreateMap<Photo, PhotoDto>()
-                .ForMember(
-                    dest => dest.Url, opt =>
-                    {
-                        opt.MapFrom<PhotoUrlResolver>();
-                    });
-                
+            // CreateMap<Photo, PhotoDto>()
+            //     .ForMember(
+            //         dest => dest.Url, opt =>
+            //         {
+            //             opt.MapFrom<PhotoUrlResolver>();
+            //         });
+
+          
+             
+                 
             CreateMap<AppUser, MemberDto>()
                 .ForMember(
                     dest => dest.PhotoUrl, opt => opt.MapFrom(src => src.Photos!.FirstOrDefault(x => x.IsMain)!.Url)  //get first photo as cover
                 ).ForMember(
                     dest => dest.Age, opt => opt.MapFrom(src => src.DateOfBirth.CalculateAge())
                 );
+
+            CreateMap<Photo, PhotoDto>();
                 
 
-            // CreateMap<MemberUpdateDto, AppUser>();
+            CreateMap<MemberUpdateDto, AppUser>();
 
             // CreateMap<RegisterDto, AppUser>();
 

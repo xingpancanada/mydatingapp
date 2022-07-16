@@ -16,19 +16,19 @@ export class HomeComponent implements OnInit {
   //constructor() { }
 
   ngOnInit(): void {
-    this.getUsers();
+    //this.getUsers();
   }
 
   registerToggle(){
     this.registerMode = !this.registerMode;
   }
 
-  getUsers(){
-    this.http.get<IUser[]>('https://localhost:7213/api/users').subscribe({
-      next: resp => this.users = resp,
-      error: err => console.log(err.error)
-    });
-  }
+  // getUsers(){
+  //   this.http.get<IUser[]>('https://localhost:7213/api/users').subscribe({
+  //     next: resp => this.users = resp,
+  //     error: err => console.log(err.error)
+  //   });
+  // }
 
   cancelRegisterMode(event: boolean){
     this.registerMode = event;

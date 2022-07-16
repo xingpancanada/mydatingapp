@@ -76,7 +76,6 @@ namespace Backend.Repositories
                     }
                 }
             }
-
             return users;
         }
 
@@ -85,7 +84,8 @@ namespace Backend.Repositories
             var user = await _context.Users!
                 .Include(p => p.Photos)
                 .SingleOrDefaultAsync(x => x.Id == id);
-
+                
+            
             return user!;
         }
 

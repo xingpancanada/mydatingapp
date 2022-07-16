@@ -23,8 +23,7 @@ export class AccountsService {
         const user = resp;
         console.log(user);
         if(user){
-          localStorage.setItem('user', JSON.stringify(user));
-          this.userBS.next(user);
+          this.setCurrentUser(user);
           //this.presence.createHubConnection(user);
         }
         return user;  //if no this return, subscribe would be undefine!!!
@@ -41,8 +40,7 @@ export class AccountsService {
         const user = resp;
         if(user){
           console.log(user);
-          localStorage.setItem('user', JSON.stringify(user));
-          this.userBS.next(user);
+          this.setCurrentUser(user);
         }
         return user;
       })
@@ -50,6 +48,7 @@ export class AccountsService {
   }
 
   setCurrentUser(user: IUser){
+    localStorage.setItem('user', JSON.stringify(user));
     this.userBS.next(user);
   }
 

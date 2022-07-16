@@ -18,7 +18,7 @@ namespace Backend.Helpers
                 return _config["ApiUrl"] + source.Url;
             }
 
-            return null;
+            return source.Url!;
         }
     }
 }

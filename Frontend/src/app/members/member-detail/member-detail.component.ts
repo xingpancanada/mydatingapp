@@ -5,6 +5,7 @@ import { Component, OnInit } from '@angular/core';
 import { Member } from 'src/app/models/member';
 import { TabDirective } from 'ngx-bootstrap/tabs';
 import { NgxGalleryAnimation, NgxGalleryImage, NgxGalleryOptions } from '@kolkov/ngx-gallery';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-member-detail',
@@ -13,6 +14,9 @@ import { NgxGalleryAnimation, NgxGalleryImage, NgxGalleryOptions } from '@kolkov
 })
 export class MemberDetailComponent implements OnInit {
   member?: any;
+  member$: Observable<Member> | undefined;
+  username?: string;
+  coverPhoto?: string;
 
   galleryOptions: NgxGalleryOptions[] = [];
   galleryImages: NgxGalleryImage[] = [];
@@ -25,9 +29,16 @@ export class MemberDetailComponent implements OnInit {
 
   async ngOnInit(){
     await this.loadMember();
+    // const username = this.route.snapshot.paramMap.get('username');
+    // console.log(username);
+    // if(username){
+    //   this.member$ = this.membersService.getMember(username);
+    // }else{
+    //   return;
+    // }
 
     //setTimeout(() => {
-      console.log(this.member);
+      console.log(this.member$);
 
       this.galleryOptions = [
         {
@@ -40,12 +51,18 @@ export class MemberDetailComponent implements OnInit {
         }
       ]
 
-      //this.galleryImages = this.getImages();
+      this.galleryImages = this.getImages();
     //}, 500);
   }
 
   getImages(): NgxGalleryImage[] {
     let imageUrls = [];
+    // this.member$?.subscribe({
+    //   next: resp => {
+    //     this.member = resp;
+    //   },
+    //   error: error => console.log(error)
+    // })
     console.log(this.member);
     if(this.member){
       for (const photo of this.member.photos) {
@@ -73,11 +90,12 @@ export class MemberDetailComponent implements OnInit {
   async loadMember(){
     const username = this.route.snapshot.paramMap.get('username');
     if(username){
-      this.membersService.getMember(username).subscribe({
+      this.membersService.getMember(username)?.subscribe({
         next: resp => {
           console.log(resp);
           this.member = resp;
           console.log(this.member);
+          this.getCoverPhoto();
           this.galleryImages = this.getImages();  //get images here to avoid undefined
         },
         error: error => this.toastr.error(error)
@@ -87,6 +105,16 @@ export class MemberDetailComponent implements OnInit {
       return;
     }
 
+  }
+
+  getCoverPhoto(){
+    if(this.member?.photos){
+      this.member.photos.forEach((x: any) => {
+        if(x.isMain === true){
+          this.coverPhoto = x.url;
+        }
+      })
+    }
   }
 
 }

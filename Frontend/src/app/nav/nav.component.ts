@@ -1,3 +1,4 @@
+import { MembersService } from 'src/app/services/members.service';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, tap } from 'rxjs';
 import { AccountsService } from './../services/accounts.service';
@@ -15,16 +16,20 @@ import { devOnlyGuardedExpression } from '@angular/compiler';
 export class NavComponent implements OnInit {
 
   users: any;
-  //user: any;
+  user: any;
   model: any = {};
   loggedIn: boolean = false;
   user$?: Observable<IUser | null>;
+
+  member?: any;
+  coverPhoto?: string;
 
   constructor(
     private http: HttpClient,
     private accountsService: AccountsService,
     private router: Router,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private memberService: MembersService
   ){}
 
   ngOnInit(): void {
@@ -66,10 +71,29 @@ export class NavComponent implements OnInit {
     this.accountsService.user$.subscribe({
       next: user => {
         this.loggedIn = !!user;
-        //this.user = user;
+        console.log(user);
+        this.loadMember(user);
       },
       error: error => console.log(error)
     });
+  }
+
+  loadMember(user: any){
+    this.memberService.getMember(user.username)?.subscribe({
+      next: member => {this.member = member;  this.getCoverPhoto();},
+      error: error => console.log(error)
+    })
+  }
+
+  getCoverPhoto(){
+    console.log(this.member);
+    if(this.member?.photos){
+      this.member.photos.forEach((x: any) => {
+        if(x.isMain === true){
+          this.coverPhoto = x.url;
+        }
+      })
+    }
   }
 
   // authCheck(){

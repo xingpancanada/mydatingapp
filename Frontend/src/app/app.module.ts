@@ -31,6 +31,12 @@ import { NotFoundComponent } from './errors/not-found/not-found.component';
 import { ErrorInterceptor } from './interceptors/error.interceptor';
 import { MemberCardComponent } from './members/member-card/member-card.component';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
+import { MemberEditComponent } from './members/member-edit/member-edit.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { LoadingInterceptor } from './interceptors/loading.interceptor';
+import { PhotoEditorComponent } from './members/photo-editor/photo-editor.component';
+import { FileUploadModule } from 'ng2-file-upload';
+
 
 @NgModule({
   declarations: [
@@ -50,7 +56,9 @@ import { JwtInterceptor } from './interceptors/jwt.interceptor';
     TestErrorComponent,
     ServerErrorComponent,
     NotFoundComponent,
-    MemberCardComponent
+    MemberCardComponent,
+    MemberEditComponent,
+    PhotoEditorComponent
   ],
   imports: [
     BrowserModule,
@@ -69,10 +77,13 @@ import { JwtInterceptor } from './interceptors/jwt.interceptor';
     }),
     TabsModule.forRoot(),
     NgxGalleryModule,
+    NgxSpinnerModule,
+    FileUploadModule,
   ],
   providers: [
+    {provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS,useClass: ErrorInterceptor,multi: true},
-    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true}
+    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
   ],
   bootstrap: [AppComponent]
 })

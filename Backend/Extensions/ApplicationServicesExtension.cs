@@ -12,11 +12,18 @@ namespace Backend.Extensions
     {
         public static IServiceCollection AddApplicationServicesFromExtension(this IServiceCollection services, IConfiguration config)
         {
+            //128
+            services.AddScoped<IPhotoService, PhotoService>();
+            
+            //127
+            services.Configure<CloudinarySettings>(config.GetSection("CloudinarySettings"));
+
             //43.Adding token service
             services.AddScoped<ITokenService, TokenService>();
 
             //93
             services.AddScoped<IUserRepository, UserRepository>();
+
 
             //13.Adding a DbContext class
             services.AddDbContext<DataContext>(options => {

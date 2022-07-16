@@ -8,6 +8,6 @@ namespace Backend.DTOs
 
         public bool IsMain { get; set; }
 
-        //public string? PublicId { get; set; }
+        public string? PublicId { get; set; }
     }
 }

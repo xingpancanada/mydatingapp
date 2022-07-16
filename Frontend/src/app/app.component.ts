@@ -28,7 +28,7 @@ export class AppComponent implements OnInit{
       this.accountsService.setCurrentUser(user);
       //this.router.navigateByUrl('/members');
     }else{
-      //this.router.navigateByUrl('/');
+      this.router.navigateByUrl('/');
     }
   }
 

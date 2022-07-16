@@ -14,6 +14,18 @@ export class MemberCardComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    console.log(this.member);
+    this.getCoverPhoto();
+  }
+
+  getCoverPhoto(){
+    if(this.member?.photos){
+      this.member.photos.forEach(x => {
+        if(x.isMain === true){
+          this.coverPhoto = x.url;
+        }
+      })
+    }
   }
 
   addLike(member: Member) {
