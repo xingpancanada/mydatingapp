@@ -8,6 +8,12 @@ namespace Backend.DTOs
         public string? Token { get; set; }
 
         public string? PhotoUrl { get; set; }  //main photo
+
+        public string? KnownAs { get; set; }
+        
+        public string? Gender { get; set; }
+        
+        
         
         
     }

@@ -48,14 +48,16 @@ namespace Backend.Controllers
             {
                 Username = user.UserName,
                 Token = _tokenService.CreateToken(user),
-                PhotoUrl = user.Photos?.FirstOrDefault(x => x.IsMain)?.Url
+                PhotoUrl = user.Photos?.FirstOrDefault(x => x.IsMain)?.Url,
+                KnownAs = user.KnownAs,
+                Gender = user.Gender
             };
         }
 
         [HttpPost("register")]
         public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
         {
-            if (await UserExists(registerDto.UserName!))
+            if (await UserExists(registerDto.Username!))
             {
                 return BadRequest("Username is taken!");
             }
@@ -65,7 +67,7 @@ namespace Backend.Controllers
 
             var user = new AppUser
             {
-                UserName = registerDto.UserName,
+                UserName = registerDto.Username,
                 PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password!)),
                 PasswordSalt = hmac.Key
             };
@@ -76,7 +78,9 @@ namespace Backend.Controllers
             return new UserDto
             {
                 Username = user.UserName,
-                Token = _tokenService.CreateToken(user)
+                Token = _tokenService.CreateToken(user),
+                KnownAs = user.KnownAs,
+                Gender = user.Gender
             };
         }
 

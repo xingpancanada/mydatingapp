@@ -24,14 +24,20 @@ namespace Backend.Extensions
             //93
             services.AddScoped<IUserRepository, UserRepository>();
 
+            //164. ADDING AN ACTION FILTER
+            services.AddScoped<LogUserActivity>();
+
 
             //13.Adding a DbContext class
             services.AddDbContext<DataContext>(options => {
                 options.UseSqlite(config.GetConnectionString("DefaultConnection"));
             });
 
+
             ////96. Adding AutoMapper
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
+
+
 
 
             return services;

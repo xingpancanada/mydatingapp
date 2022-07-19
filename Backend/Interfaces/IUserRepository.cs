@@ -1,6 +1,7 @@
 using Backend.Controllers;
 using Backend.DTOs;
 using Backend.Entities;
+using Backend.Helpers;
 
 namespace Backend.Interfaces
 {
@@ -18,7 +19,8 @@ namespace Backend.Interfaces
         Task<AppUser> GetUserByUsernameAsync(string username);
 
         Task<IEnumerable<MemberDto>> GetMembersAsync();
-        //Task<PagedList<MemberDto>> GetMembersAsync(UserParams userParams);
+        //156. Using paging class
+        Task<PagedList<MemberDto>> GetMembersWithPagingAsync(UserParams userParams);
 
         Task<MemberDto?> GetMemberAsync(string username);
     }

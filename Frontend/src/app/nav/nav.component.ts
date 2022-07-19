@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 import { IUser } from '../models/user';
 import { Router } from '@angular/router';
 import { devOnlyGuardedExpression } from '@angular/compiler';
+import { Member } from '../models/member';
 
 @Component({
   selector: 'app-nav',
@@ -21,7 +22,7 @@ export class NavComponent implements OnInit {
   loggedIn: boolean = false;
   user$?: Observable<IUser | null>;
 
-  member?: any;
+  member?: Member;
   coverPhoto?: string;
 
   constructor(
@@ -79,16 +80,21 @@ export class NavComponent implements OnInit {
   }
 
   loadMember(user: any){
-    this.memberService.getMember(user.username)?.subscribe({
-      next: member => {this.member = member;  this.getCoverPhoto();},
+    this.memberService.getMember(user.username).subscribe({
+      next: member => {
+        if(member){
+          this.member = member;
+          this.getCoverPhoto(member);
+        }
+      },
       error: error => console.log(error)
     })
   }
 
-  getCoverPhoto(){
-    console.log(this.member);
-    if(this.member?.photos){
-      this.member.photos.forEach((x: any) => {
+  getCoverPhoto(member: Member){
+    console.log(member);
+    if(member?.photos){
+      member.photos.forEach((x: any) => {
         if(x.isMain === true){
           this.coverPhoto = x.url;
         }

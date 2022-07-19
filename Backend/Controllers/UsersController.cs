@@ -1,8 +1,9 @@
-using API.Extensions;
+using Backend.Extensions;
 using AutoMapper;
 using Backend.Data;
 using Backend.DTOs;
 using Backend.Entities;
+using Backend.Helpers;
 using Backend.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -141,6 +142,29 @@ namespace Backend.Controllers
         public async Task<ActionResult<IEnumerable<MemberDto>>> GetMembers()
         {
             var users = await _userRepo.GetMembersAsync();
+
+            return Ok(users);
+        }
+
+          //[Authorize]
+        //[AllowAnonymous]
+        [HttpGet("memberswithpaging")]
+        ////USE [FromQuery], it is query parameter binding, otherwise error: unsupported media type //156
+        public async Task<ActionResult<IEnumerable<MemberDto>>> GetMembersWithPagingAsync([FromQuery]UserParams userParams)
+        {
+            //159
+            var user = await _userRepo.GetUserByUsernameAsync(User.GetUserName());
+            userParams.CurrentUsername = user.UserName;
+
+            if(string.IsNullOrEmpty(userParams.Gender)){
+                userParams.Gender = user.Gender == "male" ? "female" : "male";
+            }
+
+            //156
+            var users = await _userRepo.GetMembersWithPagingAsync(userParams);
+
+            //156
+            Response.AddPaginationHeader(users.CurrentPage, users.PageSize, users.TotalCount, users.TotalPages);
 
             return Ok(users);
         }

@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md navbar-light border-bottom shadow-sm" style="background: rgb(0, 62, 97);">
+<nav class="navbar navbar-expand-md navbar-light blueShadow" style="background: rgb(0, 62, 97);">
   <div class="container-fluid" style="background: rgb(0, 62, 97);">
     <a class="navbar-brand text-uppercase mx-3" routerLink="/">
       <img src="/assets/images/BigAlsCanada.png" width="30" height="30">
@@ -8,7 +8,7 @@
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <ng-container *ngIf="user$ | async">
           <li class="nav-item">
-            <a class="nav-link mx-2" style="font-size: small;" routerLink="/members" routerLinkActive="active">Matches</a>
+            <a class="nav-link mx-2 aItem" style="font-size: small;" routerLink="/members" routerLinkActive="active">Matches</a>
           </li>
           <!-- <li class="nav-item">
             <a class="nav-link mx-2" style="font-size: small;" routerLink="/matches" routerLinkActive="active">Matches</a>
@@ -45,9 +45,9 @@
         </button>
       </form>
 
-      <img src="{{coverPhoto}}" style="width: 2rem; height: 2rem;" class="imgmain mx-1">
+      <img *ngIf="coverPhoto" src="{{coverPhoto}}" style="width: 2rem; height: 2rem;" class="imgmain mx-1">
 
-      <div class="btn-group shadow-sm" dropdown *ngIf="(user$ | async) as u">
+      <div class="btn-group mx-2" dropdown *ngIf="(user$ | async) as u">
 
         <button dropdownToggle type="button" class="btn btn-primary btn-sm dropdown-toggle" aria-controls="dropdown-animated">
           Welcome {{u?.username | uppercase}}
