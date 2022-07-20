@@ -1,3 +1,4 @@
+using API.Data;
 using Backend.Data;
 using Backend.Helpers;
 using Backend.Interfaces;
@@ -26,6 +27,9 @@ namespace Backend.Extensions
 
             //164. ADDING AN ACTION FILTER
             services.AddScoped<LogUserActivity>();
+
+            //174.
+            services.AddScoped<ILikesRepository, LikesRepository>();
 
 
             //13.Adding a DbContext class

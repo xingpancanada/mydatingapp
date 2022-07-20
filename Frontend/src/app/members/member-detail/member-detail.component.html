@@ -20,7 +20,7 @@
                  <strong>Member since:</strong>
                  <p>{{member?.created | date: 'longDate'}}</p>
              </div>
-             <div>
+             <div *ngIf="member?.lastActive">
                  <strong>Last active:</strong>
                  <p>{{member?.lastActive | timeago}}</p>
              </div>

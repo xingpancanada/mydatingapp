@@ -17,6 +17,7 @@ namespace Backend.Entities
 
         //add below 2 lines: it will create model with delete cascade 
         //when delete AppUser, it delete related photos at the same time
+        //many to one --> one to many
         public AppUser? AppUser { get; set; }
         
         public int AppUserId { get; set; }

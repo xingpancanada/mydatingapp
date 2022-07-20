@@ -32,6 +32,7 @@ namespace Backend.Entities
 
         public string? Country { get; set; }
 
+        //one to many
         public ICollection<Photo>? Photos { get; set; }
 
         // //87  //99 delete and do it in AutoMapper Profiles
@@ -39,5 +40,9 @@ namespace Backend.Entities
         // {
         //     return DateOfBirth.CalculateAge();
         // }
+
+        //173. many to many 
+        public ICollection<UserLike>? LikedByUsers { get; set; }
+        public ICollection<UserLike>? LikedUsers { get; set; }
     }
 }

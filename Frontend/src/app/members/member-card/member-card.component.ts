@@ -1,3 +1,5 @@
+import { ToastrService } from 'ngx-toastr';
+import { MembersService } from 'src/app/services/members.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { Member } from 'src/app/models/member';
 
@@ -11,10 +13,13 @@ export class MemberCardComponent implements OnInit {
 
   coverPhoto?: string;
 
-  constructor() { }
+  constructor(
+    private membersService: MembersService,
+    private toastr: ToastrService
+  ) { }
 
   ngOnInit(): void {
-    //console.log(this.member);
+    console.log(this.member);
     this.getCoverPhoto();
   }
 
@@ -29,9 +34,10 @@ export class MemberCardComponent implements OnInit {
   }
 
   addLike(member: Member) {
-    // this.memberService.addLike(member.username).subscribe(() => {
-    //   this.toastr.success('You have liked ' + member.knownAs);
-    // })
+    this.membersService.addLike(member.username).subscribe({
+      next: resp => this.toastr.success('You have liked ' + member.knownAs),
+      error: error => this.toastr.error('You cannot liked ' + member.knownAs + ': ' + error)
+    })
   }
 
 }

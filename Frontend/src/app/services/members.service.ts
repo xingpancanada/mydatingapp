@@ -41,6 +41,25 @@ export class MembersService {
    })
   }
 
+  //177
+  addLike(username: string) {
+    return this.http.post(this.baseUrl + 'likes/' + username, {});
+  }
+
+  // getLikes(predicate: string) {
+  //   return this.http.get<Partial<Member[]>>(this.baseUrl + 'likes?predicate=' + predicate);
+  // }
+  getLikes(predicate: string, pageNumber: number, pageSize: number) {
+    let params = new HttpParams();
+
+    params = params.append('pageNumber', pageNumber.toString());
+    params = params.append('pageSize', pageSize.toString());
+
+    params = params.append('predicate', predicate);
+
+    return this.getPaginatedResult<Partial<Member[]>>(this.baseUrl + 'likes', params);
+  }
+
 
   getUserParams(){
     return this.userParams;
@@ -175,3 +194,7 @@ export class MembersService {
     return this.http.get<Member>(this.baseUrl + 'users/member/' + name);
   }
 }
+function getPaginationHeaders(pageNumber: number, pageSize: number) {
+  throw new Error('Function not implemented.');
+}
+
