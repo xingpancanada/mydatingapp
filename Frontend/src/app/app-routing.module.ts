@@ -13,6 +13,7 @@ import { ServerErrorComponent } from './errors/server-error/server-error.compone
 import { NotFoundComponent } from './errors/not-found/not-found.component';
 import { MemberEditComponent } from './members/member-edit/member-edit.component';
 import { PreventUnsavedChangesGuard } from './guards/prevent-unsaved-changes.guard';
+import { MemberDetailedResolver } from './resolvers/member-detailed.resolver';
 
 
 const routes: Routes = [
@@ -23,7 +24,7 @@ const routes: Routes = [
   {path:'not-found', component: NotFoundComponent},
   {path:'matches', component: MatchesComponent},
   {path:'members', component: MemberListComponent},
-  {path:'members/:username', component: MemberDetailComponent},
+  {path:'members/:username', component: MemberDetailComponent, resolve: {member: MemberDetailedResolver}},
   {path:'member/edit', component: MemberEditComponent, canDeactivate: [PreventUnsavedChangesGuard]},
   //{path:'member/edit', component: MemberEditComponent},
   {path:'lists', component: ListsComponent},

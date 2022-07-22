@@ -44,5 +44,9 @@ namespace Backend.Entities
         //173. many to many 
         public ICollection<UserLike>? LikedByUsers { get; set; }
         public ICollection<UserLike>? LikedUsers { get; set; }
+
+        //183. many to many
+        public ICollection<Message>? MessagesSent { get; set; }
+        public ICollection<Message>? MessagesReceived { get; set; }
     }
 }

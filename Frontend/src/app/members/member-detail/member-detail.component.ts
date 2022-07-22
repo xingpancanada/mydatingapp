@@ -1,9 +1,9 @@
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute } from '@angular/router';
 import { MembersService } from 'src/app/services/members.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Member } from 'src/app/models/member';
-import { TabDirective } from 'ngx-bootstrap/tabs';
+import { TabDirective, TabsetComponent } from 'ngx-bootstrap/tabs';
 import { NgxGalleryAnimation, NgxGalleryImage, NgxGalleryOptions } from '@kolkov/ngx-gallery';
 import { Observable } from 'rxjs';
 
@@ -13,6 +13,8 @@ import { Observable } from 'rxjs';
   styleUrls: ['./member-detail.component.scss']
 })
 export class MemberDetailComponent implements OnInit {
+  @ViewChild('memberTabs', {static: true}) memberTabs: TabsetComponent | undefined;
+
   member?: any;
   member$: Observable<Member> | undefined;
   username?: string;
@@ -37,8 +39,12 @@ export class MemberDetailComponent implements OnInit {
     //   return;
     // }
 
+    this.route.queryParams.subscribe((params: any) => {
+      params.tab ? this.selectTab(params.tab) : this.selectTab(0);
+    });
+
     //setTimeout(() => {
-      console.log(this.member$);
+      //console.log(this.member$);
 
       this.galleryOptions = [
         {
@@ -115,6 +121,10 @@ export class MemberDetailComponent implements OnInit {
         }
       })
     }
+  }
+
+  selectTab(tabId: number) {
+    this.memberTabs!.tabs[tabId].active = true;
   }
 
 }

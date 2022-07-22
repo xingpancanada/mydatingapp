@@ -31,6 +31,9 @@ namespace Backend.Extensions
             //174.
             services.AddScoped<ILikesRepository, LikesRepository>();
 
+            //184
+            services.AddScoped<IMessageRepository, MessageRepository>();
+
 
             //13.Adding a DbContext class
             services.AddDbContext<DataContext>(options => {
