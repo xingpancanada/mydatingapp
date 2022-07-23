@@ -1,15 +1,19 @@
 using Backend.Entities;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Backend.Data
 {
-    public class DataContext : DbContext
+    //203.Configuring the DbContext
+    //public class DataContext : DbContext
+    public class DataContext : IdentityDbContext<AppUser, AppRole, int, IdentityUserClaim<int>, AppUserRole, IdentityUserLogin<int>, IdentityRoleClaim<int>, IdentityUserToken<int>>
     {
         public DataContext(DbContextOptions options) : base(options)
         {
         }
 
-        public DbSet<AppUser>? Users { get; set; }
+        //public DbSet<AppUser>? Users { get; set; }  //203 remove
         public DbSet<Photo>? Photos { get; set; }
         
         //173. many to many
@@ -26,6 +30,20 @@ namespace Backend.Data
          protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
+            //203.Configuring the DbContext
+            builder.Entity<AppUser>()
+                .HasMany(ur => ur.UserRoles)
+                .WithOne(u => u.User)
+                .HasForeignKey(ur => ur.UserId)
+                .IsRequired();
+
+            builder.Entity<AppRole>()
+                .HasMany(ur => ur.UserRoles)
+                .WithOne(u => u.Role)
+                .HasForeignKey(ur => ur.RoleId)
+                .IsRequired();
+                
 
             //173. many to many
             //do HasKey here because UserLike doesn't have primary key

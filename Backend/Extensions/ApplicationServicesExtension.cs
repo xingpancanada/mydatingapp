@@ -4,6 +4,7 @@ using Backend.Helpers;
 using Backend.Interfaces;
 using Backend.Repositories;
 using Backend.Services;
+using Backend.SignalR;
 using Microsoft.EntityFrameworkCore;
 
 namespace Backend.Extensions
@@ -13,6 +14,9 @@ namespace Backend.Extensions
     {
         public static IServiceCollection AddApplicationServicesFromExtension(this IServiceCollection services, IConfiguration config)
         {
+            //225. Adding a presence tracker
+            services.AddSingleton<PresenceTracker>();
+            
             //128
             services.AddScoped<IPhotoService, PhotoService>();
             

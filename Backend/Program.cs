@@ -1,11 +1,14 @@
 using System.Text;
 using Backend.Data;
+using Backend.Entities;
 using Backend.Extensions;
 using Backend.Helpers;
 using Backend.Interfaces;
 using Backend.Middleware;
 using Backend.Services;
+using Backend.SignalR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
@@ -54,7 +57,8 @@ builder.Services.AddSwaggerServicesFromExtension();
 //47. Adding extension methods
 builder.Services.AddIdentityServiceFromExtension(config);
 
-
+//222. Adding a presence hub
+builder.Services.AddSignalR();
 
 var app = builder.Build();
 
@@ -83,11 +87,23 @@ ILogger logger = app.Logger;
 //var loggerFactory = services.GetRequiredService<ILoggerFactory>;
 try 
 {
-    //28. Applying the migrations and creating the Database at app startup
-    var dbContext = services.GetRequiredService<DataContext>();
-    await dbContext.Database.MigrateAsync();
-    //29. Adding Seed data
-    await Seed.SeedUsers(dbContext);
+    // //28. Applying the migrations and creating the Database at app startup
+    // var dbContext = services.GetRequiredService<DataContext>();
+    // await dbContext.Database.MigrateAsync();
+    // //29. Adding Seed data
+    // await Seed.SeedUsers(dbContext);
+
+    //206. Updating the see method
+    var context = services.GetRequiredService<DataContext>();
+
+    var userManager = services.GetRequiredService<UserManager<AppUser>>();
+
+    var roleManager = services.GetRequiredService<RoleManager<AppRole>>();
+    
+    await context.Database.MigrateAsync();
+    
+    await Seed.SeedUsers(userManager, roleManager);
+
 }
 catch (Exception ex)
 {
@@ -95,13 +111,31 @@ catch (Exception ex)
 }
 
 ////25. Adding CORS Support to the API
-app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200"));
+//app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200"));
+////223. Authenticating to SignalR
+app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins("https://localhost:4200"));
+
 
 ///46. Adding the authentication middleware
 app.UseAuthentication();
 
 app.UseAuthorization();
 
+
 app.MapControllers();
+
+//222. Adding a presence hub
+app.MapHub<PresenceHub>("hubs/presence");
+//227.Creating a message hub
+app.MapHub<MessageHub>("hubs/message");
+
+
+//.net 5
+// app.UseEndpoints(endpoints =>
+// {
+//     endpoints.MapControllers();
+//     endpoints.MapHub<PresenceHub>("hubs/presence");
+//     //endpoints.MapHub<MessageHub>("hubs/message");
+// });
 
 app.Run();

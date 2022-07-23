@@ -20,6 +20,9 @@
             <a class="nav-link mx-2 aItem" style="font-size: small;" routerLink="/messages" routerLinkActive="active">Message</a>
           </li>
           <li class="nav-item">
+            <a class="nav-link mx-2 aItem" *appHasRole='["Adimin", "Moderator"]' style="font-size: small;" routerLink="/admin" routerLinkActive="active">Admin</a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link mx-2 aItem" style="font-size: small;" routerLink="/test-error" routerLinkActive="active">Errors</a>
           </li>
         </ng-container>

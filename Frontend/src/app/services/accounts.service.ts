@@ -1,3 +1,4 @@
+import { PresenceService } from './presence.service';
 import { IUser } from './../models/user';
 import { HttpClient } from '@angular/common/http';
 import { environment } from './../../environments/environment';
@@ -14,7 +15,8 @@ export class AccountsService {
   user$ = this.userBS.asObservable();
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private presence: PresenceService
   ) { }
 
   register(model: any){
@@ -24,7 +26,8 @@ export class AccountsService {
         console.log(user);
         if(user){
           this.setCurrentUser(user);
-          //this.presence.createHubConnection(user);
+          //224
+          this.presence.createHubConnection(user);
         }
         return user;  //if no this return, subscribe would be undefine!!!
       })
@@ -41,6 +44,8 @@ export class AccountsService {
         if(user){
           console.log(user);
           this.setCurrentUser(user);
+           //224
+           this.presence.createHubConnection(user);
         }
         return user;
       })
@@ -48,6 +53,11 @@ export class AccountsService {
   }
 
   setCurrentUser(user: IUser){
+    //214
+    user.roles = [];
+    const roles = this.getDecodedToken(user.token).role;
+    Array.isArray(roles) ? user.roles = roles : user.roles.push(roles);
+
     localStorage.setItem('user', JSON.stringify(user));
     this.userBS.next(user);
   }
@@ -55,5 +65,12 @@ export class AccountsService {
   logout(){
     localStorage.removeItem('user');
     this.userBS.next(null);
+     //224
+     this.presence!.stopHubConnection();
+  }
+
+  //214
+  getDecodedToken(token: string) {
+    return JSON.parse(atob(token.split('.')[1]));
   }
 }

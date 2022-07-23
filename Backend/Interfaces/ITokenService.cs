@@ -1,9 +1,12 @@
 using Backend.Entities;
+using Microsoft.AspNetCore.Identity;
 
 namespace Backend.Interfaces
 {
     public interface ITokenService
     {
-        string CreateToken(AppUser user);
+        //209
+        Task<string> CreateTokenAsync(AppUser user);
+        //string CreateToken(AppUser user);
     }
 }

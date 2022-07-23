@@ -19,7 +19,8 @@ export class MemberMessagesComponent implements OnInit {
   constructor(public messageService: MessageService){}
 
   ngOnInit(): void{
-    this.loadMessages();
+    //this.loadMessages();
+    //console.log(this.messageService.messageThread$);
   }
 
   loadMessages(){
@@ -34,14 +35,14 @@ export class MemberMessagesComponent implements OnInit {
   }
 
   async sendMessage(){
-    (await this.messageService.sendMessage(this.username!, this.messageContent!)).subscribe((message: any) => {
-      this.messages?.push(message);
+    // (await this.messageService.sendMessage(this.username!, this.messageContent!)).subscribe((message: any) => {
+    //   this.messages?.push(message);
+    //   this.messageForm?.reset();
+    // })
+
+    this.messageService.sendMessage(this.username!, this.messageContent!).then(() => {
       this.messageForm?.reset();
     })
-
-    // this.messageService.sendMessage(this.username!, this.messageContent!).then(() => {
-    //   this.messageForm.reset();
-    // })
   }
 
 }

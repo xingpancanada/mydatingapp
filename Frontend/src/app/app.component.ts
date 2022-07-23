@@ -1,3 +1,5 @@
+import { MessageService } from 'src/app/services/message.service';
+import { PresenceService } from './services/presence.service';
 import { AccountsService } from './services/accounts.service';
 import { IUser } from './models/user';
 import { HttpClient } from '@angular/common/http';
@@ -15,7 +17,8 @@ export class AppComponent implements OnInit{
 
   constructor(
     private accountsService: AccountsService,
-    private router: Router
+    private router: Router,
+    private presence: PresenceService
   ){}
 
   ngOnInit(): void {
@@ -26,7 +29,8 @@ export class AppComponent implements OnInit{
     const user: IUser = JSON.parse(localStorage.getItem('user')!);
     if(user){
       this.accountsService.setCurrentUser(user);
-      //this.router.navigateByUrl('/members');
+      //224.Client side SignalR
+      this.presence.createHubConnection(user);
     }else{
       this.router.navigateByUrl('/');
     }

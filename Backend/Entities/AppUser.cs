@@ -1,16 +1,17 @@
 using Backend.Extensions;
+using Microsoft.AspNetCore.Identity;
 
 namespace Backend.Entities
 {
-    public class AppUser
+    public class AppUser : IdentityUser<int>  //202. Setting up the entities
     {
-        public int Id { get; set; }
+        //public int Id { get; set; }
         
-        public string? UserName { get; set; }
+        //public string? UserName { get; set; }
         //public string? Email { get; set; }
         
-        public byte[]? PasswordHash { get; set; }
-        public byte[]? PasswordSalt { get; set; }
+        //public byte[]? PasswordHash { get; set; }
+        //public byte[]? PasswordSalt { get; set; }
 
         public string? KnownAs { get; set; }
 
@@ -48,5 +49,8 @@ namespace Backend.Entities
         //183. many to many
         public ICollection<Message>? MessagesSent { get; set; }
         public ICollection<Message>? MessagesReceived { get; set; }
+
+        //202. Setting up the entities
+        public ICollection<AppUserRole>? UserRoles { get; set; }
     }
 }

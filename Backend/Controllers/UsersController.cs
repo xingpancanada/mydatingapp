@@ -178,7 +178,7 @@ namespace Backend.Controllers
             return Ok(user);
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         //[AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers()

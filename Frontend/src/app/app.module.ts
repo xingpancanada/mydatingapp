@@ -42,6 +42,10 @@ import { PhotoEditorComponent } from './members/photo-editor/photo-editor.compon
 import { FileUploadModule } from 'ng2-file-upload';
 import { TimeagoModule } from 'ngx-timeago';
 import { MemberMessagesComponent } from './members/member-messages/member-messages.component';
+import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
+import { PhotoManagementComponent } from './admin/photo-management/photo-management.component';
+import { UserManagementComponent } from './admin/user-management/user-management.component';
+import { HasRoleDirective } from './directives/has-role.directive';
 
 
 @NgModule({
@@ -65,7 +69,11 @@ import { MemberMessagesComponent } from './members/member-messages/member-messag
     MemberCardComponent,
     MemberEditComponent,
     PhotoEditorComponent,
-    MemberMessagesComponent
+    MemberMessagesComponent,
+    AdminPanelComponent,
+    PhotoManagementComponent,
+    UserManagementComponent,
+    HasRoleDirective
   ],
   imports: [
     BrowserModule,
